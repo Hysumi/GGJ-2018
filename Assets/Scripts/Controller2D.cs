@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))] //Autimaticamente adiciona o BoxCollider2D ao objeto e não permite que retire
+
+/*
+ * ref: Toda alteração feita em uma variável com ref, vai alterar seu valor nas demais funções, não apenas localmente
+ */
 public class Controller2D : MonoBehaviour {
 
     public LayerMask collisionMask; 
@@ -8,6 +12,8 @@ public class Controller2D : MonoBehaviour {
     const float skinWidth = .015f;
     public int horizontalRayCount = 4;
     public int verticalRayCount = 4;
+
+    float maxClimbAngle = 80;
 
     float horizontalRaySpacing;
     float verticalRaySpacing;
@@ -40,10 +46,7 @@ public class Controller2D : MonoBehaviour {
         transform.Translate(velocity);
     }
 
-    /*  Trata as colisões verticais
-     *  ref: Toda alteração feita no vetor velocity dentro dessa função, 
-     * vai alterar seu valor nas demais funções;
-     */
+    // Trata as colisões verticais
     void VerticalCollisions(ref Vector3 velocity) 
     {
         float directionY = Mathf.Sign(velocity.y); //Pega o sinal da direção em Y (-1: baixo, 1: cima)
@@ -63,7 +66,10 @@ public class Controller2D : MonoBehaviour {
                 velocity.y = (hit.distance - skinWidth) * directionY;
                 rayLenght = hit.distance;
 
-
+                if (collisions.climbingSlope)
+                {
+                    velocity.x = velocity.y / Mathf.Tan(collisions.slopeAngle * Mathf.Rad2Deg) * Mathf.Sign(velocity.x);
+                }
                 //Determina para qual direção colide
                 collisions.below = directionY == -1;
                 collisions.above = directionY == 1;
@@ -88,14 +94,52 @@ public class Controller2D : MonoBehaviour {
 
             if (hit)
             {
-                velocity.x = (hit.distance - skinWidth) * directionX;
-                rayLenght = hit.distance;
+                float slopeAngle = Vector2.Angle(hit.normal, Vector2.up); //Determina o ângulo de inclinação do chão
 
-                //Determina para qual direção colide
-                collisions.left = directionX == -1;
-                collisions.right = directionX == 1;
+                if (i == 0 && slopeAngle <= maxClimbAngle)
+                {
+                    float distanceToSlopeStart = 0;
+                    if(slopeAngle != collisions.slopeAngleOld)
+                    {
+                        distanceToSlopeStart = hit.distance - skinWidth;
+                        velocity.x -= distanceToSlopeStart * directionX;
+                    }
+                    ClimbSlope(ref velocity, slopeAngle);
+                    velocity.x += distanceToSlopeStart * directionX;
+                }
+
+                if(!collisions.climbingSlope || slopeAngle > maxClimbAngle)
+                {
+                    velocity.x = (hit.distance - skinWidth) * directionX;
+                    rayLenght = hit.distance;
+
+                    if (collisions.climbingSlope)
+                    {
+                        velocity.y = Mathf.Tan(collisions.slopeAngle * Mathf.Deg2Rad) * Mathf.Abs(velocity.x);
+                    }
+
+                    //Determina para qual direção colide
+                    collisions.left = directionX == -1;
+                    collisions.right = directionX == 1;
+                }
             }
         }
+    }
+
+    void ClimbSlope(ref Vector3 velocity, float slopeAngle)
+    {
+        float moveDistance = Mathf.Abs(velocity.x);
+        float climbVelocityY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
+
+        if(velocity.y <= climbVelocityY)
+        { 
+            velocity.y = climbVelocityY;
+            velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(velocity.x);
+            collisions.below = true;
+            collisions.climbingSlope = true;
+            collisions.slopeAngle = slopeAngle;
+        }
+
     }
 
     void UpdateRaycastOrigins() //A origem do raycast no objeto
@@ -133,10 +177,16 @@ public class Controller2D : MonoBehaviour {
         public bool above, below;
         public bool left, right;
 
+        public bool climbingSlope;
+        public float slopeAngle, slopeAngleOld;
+
         public void Reset()
         {
             above = below = false;
             left = right = false;
+            climbingSlope = false;
+            slopeAngleOld = slopeAngle;
+            slopeAngle = 0;
         }
     }
 }
