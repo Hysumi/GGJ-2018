@@ -81,7 +81,7 @@ Material:
     - _SpeedY: 0
     - _SrcBlend: 1
     - _Steps: 20
-    - _Transparency: 0.128
+    - _Transparency: 0.354
     - _UVSec: 0
     - _Wavy: 1
     - _ZWrite: 1

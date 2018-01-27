@@ -55,7 +55,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Amplitude: 0.4
+    - _Amplitude: 0.6
     - _Blend: 1
     - _BumpAmt: 6.6
     - _BumpScale: 1
@@ -65,23 +65,23 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Height: 20
+    - _Height: 5
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _OffsetX: 1
     - _OffsetY: 0
     - _Parallax: 0.02
-    - _Radius: 0.8
+    - _Radius: 0.59
     - _RaiseSpeed: 20
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _Speed: 4.69
+    - _Speed: 10
     - _SpeedX: 2
     - _SpeedY: 0
     - _SrcBlend: 1
-    - _Steps: 3
-    - _Transparency: 0.34
+    - _Steps: 5
+    - _Transparency: 0.636
     - _UVSec: 0
     - _Wavy: 1
     - _ZWrite: 1

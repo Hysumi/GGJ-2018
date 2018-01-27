@@ -8,7 +8,6 @@ public class ResolutionSetter : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		int mult = Screen.currentResolution.height/height;
-		Debug.Log(mult);
 		
 		Screen.SetResolution(width * mult, height * mult, false);
 		
