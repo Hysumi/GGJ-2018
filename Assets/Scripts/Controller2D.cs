@@ -9,6 +9,7 @@ public class Controller2D : RaycastController {
     float maxDescendAngle = 75;
    
     public CollisionsInfo collisions;
+    Vector2 playerInput;
 
     public override void Start() //Chama o método Start do RaycastController
     {
@@ -16,13 +17,19 @@ public class Controller2D : RaycastController {
         collisions.faceDir = 1;
     }
 
+    public void Move(Vector3 velocity, bool standingOnPlatform)
+    {
+        Move(velocity, Vector2.zero, standingOnPlatform);
+    }
     //Função que controla o movimento
-    public void Move(Vector3 velocity, bool stadingOnPlatform = false) 
+    public void Move(Vector3 velocity, Vector2 input, bool stadingOnPlatform = false) 
     {
         UpdateRaycastOrigins();
         collisions.Reset();
         collisions.velocityOld = velocity;
-        if(velocity.x != 0)
+        playerInput = input;
+
+        if (velocity.x != 0)
         {
             collisions.faceDir = (int)Mathf.Sign(velocity.x);
         }
@@ -61,6 +68,23 @@ public class Controller2D : RaycastController {
 
             if (hit)
             {
+                if(hit.collider.tag == "Through")
+                {
+                    if(directionY == 1 || hit.distance == 0) //Se tiver subindo uma plataforma ou parar no meio dela, não colide
+                    {
+                        continue;
+                    }
+                    if (collisions.fallingThroughPlatform) //Se estiver caindo da plataforma
+                    {
+                        continue;
+                    }
+                    if(playerInput.y == -1) //Se estiver numa plataforma e apertar para baixo, ignora colisão
+                    {
+                        collisions.fallingThroughPlatform = true;
+                        Invoke("ResetFallingThroughPlatform", .5f); //depois de meio segundo, reseta
+                        continue;
+                    }
+                }
                 velocity.y = (hit.distance - skinWidth) * directionY;
                 rayLength = hit.distance;
 
@@ -202,6 +226,11 @@ public class Controller2D : RaycastController {
         }
     }
 
+    void ResetFallingThroughPlatform()
+    {
+        collisions.fallingThroughPlatform = false;
+    }
+
     public struct CollisionsInfo
     {
         public bool above, below;
@@ -212,6 +241,7 @@ public class Controller2D : RaycastController {
         public float slopeAngle, slopeAngleOld;
         public Vector3 velocityOld;
         public int faceDir;
+        public bool fallingThroughPlatform;
 
         public void Reset()
         {
