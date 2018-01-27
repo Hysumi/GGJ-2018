@@ -52,7 +52,11 @@ public class PlatformController : RaycastController {
         float directionX = Mathf.Sign(velocity.x);
         float directionY = Mathf.Sign(velocity.y);
 
-        //Vertically moving Platform
+        /*  Vertically moving Platform
+         *  Se o player estiver invadindo a plataforma enquanto ele sobe,
+         * é porque ele se encontra entre dois raycasts, se aumentar a quantidade de raycasts
+         * o mesmo não ocorre.
+         */
         if (velocity.y != 0)
         {
             float rayLength = Mathf.Abs(velocity.y) + skinWidth;
