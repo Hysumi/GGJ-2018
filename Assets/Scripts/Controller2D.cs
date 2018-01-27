@@ -13,6 +13,7 @@ public class Controller2D : RaycastController {
     public override void Start() //Chama o método Start do RaycastController
     {
         base.Start();
+        collisions.faceDir = 1;
     }
 
     //Função que controla o movimento
@@ -21,16 +22,16 @@ public class Controller2D : RaycastController {
         UpdateRaycastOrigins();
         collisions.Reset();
         collisions.velocityOld = velocity;
-
+        if(velocity.x != 0)
+        {
+            collisions.faceDir = (int)Mathf.Sign(velocity.x);
+        }
         if(velocity.y < 0) //Descending Slope
         {
             DescendSlope(ref velocity);
         }
 
-        if (velocity.x != 0)
-        {
-            HorizontalCollisions(ref velocity);
-        }
+        HorizontalCollisions(ref velocity); //Não verifica se velocity.x != 0 por causa do Wall Sliding
         if(velocity.y != 0)
         {
             VerticalCollisions(ref velocity);
@@ -97,9 +98,13 @@ public class Controller2D : RaycastController {
     //Trata as colisões horizontais
     void HorizontalCollisions(ref Vector3 velocity)
     {
-        float directionX = Mathf.Sign(velocity.x); //Pega o sinal da direção em X (-1: esquerda, 1: direita)
+        float directionX = collisions.faceDir; //Pega o sinal da direção em X (-1: esquerda, 1: direita)
         float rayLength = Mathf.Abs(velocity.x) + skinWidth;
 
+        if(Mathf.Abs(velocity.x) < skinWidth)
+        {
+            rayLength = 2 * skinWidth;
+        }
         for (int i = 0; i < horizontalRayCount; i++)
         {
             Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
@@ -206,6 +211,7 @@ public class Controller2D : RaycastController {
         public bool descendingSlope;
         public float slopeAngle, slopeAngleOld;
         public Vector3 velocityOld;
+        public int faceDir;
 
         public void Reset()
         {
