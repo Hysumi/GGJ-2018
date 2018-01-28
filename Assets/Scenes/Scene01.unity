@@ -244,6 +244,7 @@ GameObject:
   - component: {fileID: 596859120}
   - component: {fileID: 596859119}
   - component: {fileID: 596859121}
+  - component: {fileID: 596859122}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -290,6 +291,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainTheme: {fileID: 8300000, guid: 6e78712f6a027af46a33dbba83ac4a1c, type: 3}
   menuTheme: {fileID: 8300000, guid: 7a289176bbcd6934094cce69cbe67ce8, type: 3}
+--- !u!114 &596859122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 596859118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b15a9e4271d820843aa0213897857b37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundGroups:
+  - groupID: G13D
+    group:
+    - {fileID: 8300000, guid: e0a700b013581b3438beddb45e398b44, type: 3}
+    - {fileID: 8300000, guid: c62fb6dc9abfe3c4893a3f7f5bb35c5a, type: 3}
+  - groupID: G12D
+    group:
+    - {fileID: 8300000, guid: a6affdbd528cf374aacb23ca57d55bdd, type: 3}
+    - {fileID: 8300000, guid: 332e353685f484049ad9bb6b56d71295, type: 3}
 --- !u!1 &646649860
 GameObject:
   m_ObjectHideFlags: 0

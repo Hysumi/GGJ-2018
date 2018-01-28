@@ -102,7 +102,10 @@ public class AudioManager : MonoBehaviour {
         StartCoroutine(AnimateMusicCrossfade(fadeDuration));
     }
 
-    public void PlaySound(AudioClip clip, Vector3 pos)
+    #region Play 3D Sounds
+
+    //Precisa determinar uma posição no plano 3D
+    public void PlaySound(AudioClip clip, Vector3 pos) 
     {
         if(clip != null)
         {
@@ -110,15 +113,43 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
-    public void PlaySound(string soundName, Vector3 pos) //Escolhe o som de um grupo de forma aleatória
+    public void PlaySound(string groupName, Vector3 pos) //Escolhe o som de um grupo de forma aleatória
     {
-        PlaySound(library.GetClipFromName(soundName), pos); 
+        PlaySound(library.GetClipFromName(groupName), pos); 
     }
 
-    public void PlaySound2D(string soundName)
+    public void PlaySound(string groupName, string name, Vector3 pos) //Escolhe o som de um grupo a partir do nome do som
     {
-        sfx2DSource.PlayOneShot(library.GetClipFromName(soundName), sfxVolumePercent * masterVolumePercent);
+        PlaySound(library.GetClipFromName(groupName, name), pos);
     }
+
+    public void PlaySound(string groupName, int id, Vector3 pos) //Escolhe o som de um grupo a partir do id da posição do grupo
+    {
+        PlaySound(library.GetClipFromName(groupName, id), pos);
+    }
+
+    #endregion
+
+    #region Play 2D Sounds
+
+    //Não precisa determinar uma posição
+
+    public void PlaySound2D(string soundGroup)  //Escolhe o som de um grupo de forma aleatória
+    {
+        sfx2DSource.PlayOneShot(library.GetClipFromName(soundGroup), sfxVolumePercent * masterVolumePercent);
+    }
+
+    public void PlaySound2D(string soundName, string name)  //Escolhe o som de um grupo a partir do nome do som
+    {
+        sfx2DSource.PlayOneShot(library.GetClipFromName(soundName, name), sfxVolumePercent * masterVolumePercent);
+    }
+
+    public void PlaySound2D(string soundName, int id)  //Escolhe o som de um grupo a partir do id da posição do grupo
+    {
+        sfx2DSource.PlayOneShot(library.GetClipFromName(soundName, id), sfxVolumePercent * masterVolumePercent);
+    }
+
+    #endregion 
 
     IEnumerator AnimateMusicCrossfade(float duration) //Troca de música
     {
