@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Glitch Stripes
+  m_Name: Glitch Stripes TV
   m_Shader: {fileID: 4800000, guid: b4d78f3ee2cdc034ba82996750f65df4, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -73,15 +73,15 @@ Material:
     - _OffsetY: 0
     - _Parallax: 0.02
     - _Radius: 0.8
-    - _RaiseSpeed: 15
+    - _RaiseSpeed: 40
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _Speed: 4.62
+    - _Speed: 4
     - _SpeedX: 2
     - _SpeedY: 0
     - _SrcBlend: 1
-    - _Steps: 10
-    - _Transparency: 0.102
+    - _Steps: 20.4
+    - _Transparency: 0.15
     - _UVSec: 0
     - _Wavy: 1
     - _ZWrite: 1
