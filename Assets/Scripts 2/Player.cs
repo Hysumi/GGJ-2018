@@ -9,10 +9,6 @@ public class Player : MonoBehaviour {
     float accelerationTimeAirborne = .2f; //Aceleração no Ar
     float accelerationTimeGrounded = .1f; //Aceleração no chão
     float gravity;
-<<<<<<< HEAD:Assets/Scripts 2/Player.cs
-	SpriteRenderer rend;
-    float jumpVelocity;
-=======
     float maxJumpVelocity;
     float minJumpVelocity;
 
@@ -22,7 +18,6 @@ public class Player : MonoBehaviour {
     public float wallSlideSpeedMax = 3;
     public float wallStickTime = .25f;
     float timeToWallUnstick;
->>>>>>> master:Assets/Scripts/Player.cs
 
     float moveSpeed = 6;
     Vector3 velocity;
@@ -36,16 +31,10 @@ public class Player : MonoBehaviour {
 
 	void Start () {
         controller = GetComponent<Controller2D>();
-<<<<<<< HEAD:Assets/Scripts 2/Player.cs
-		rend = GetComponent<SpriteRenderer>();
-        gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2); //S = S0 + V0*t + (a * t^2)/2
-        jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex; // V = Vo + a*t;
-=======
         gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2); //S = S0 + V0*t + (a * t^2)/2
         maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex; // V = Vo + a*t;
         minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight); // V² = Vo² + 2*a*(S-So)
         print("Gravit: " + gravity + " Jump Velocity " + maxJumpVelocity);
->>>>>>> master:Assets/Scripts/Player.cs
     }
 
     void Update()
@@ -114,10 +103,6 @@ public class Player : MonoBehaviour {
         {
             velocity.y = minJumpVelocity;
         }
-<<<<<<< HEAD:Assets/Scripts 2/Player.cs
-		
-		rend.flipX = input.x > 0;
-=======
     }
 
     void HandleWallSliding()
@@ -135,7 +120,6 @@ public class Player : MonoBehaviour {
             {
                 velocityXSmoothing = 0;
                 velocity.x = 0;
->>>>>>> master:Assets/Scripts/Player.cs
 
                 if (directionalInput.x != wallDirX && directionalInput.x != 0)
                 {
