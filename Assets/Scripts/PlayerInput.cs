@@ -4,6 +4,7 @@
 public class PlayerInput : MonoBehaviour {
 
     Player player;
+    public AudioClip teste;
 
 	void Start () {
         player = GetComponent<Player>();
@@ -16,6 +17,7 @@ public class PlayerInput : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             player.onJumpInputDown();
+            AudioManager.instance.PlaySound2D(teste);
         }
         if (Input.GetKeyUp(KeyCode.Space))
         {

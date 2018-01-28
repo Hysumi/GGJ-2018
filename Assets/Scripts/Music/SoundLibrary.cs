@@ -11,7 +11,7 @@ public class SoundLibrary : MonoBehaviour {
     {
         foreach(SoundGroup soundGroup in soundGroups)
         {
-            groupDictionary.Add(soundGroup.groupID, soundGroup.group);
+            groupDictionary.Add(soundGroup.groupName, soundGroup.group);
         }
     }
 
@@ -60,7 +60,7 @@ public class SoundLibrary : MonoBehaviour {
     [System.Serializable]
     public class SoundGroup
     {
-        public string groupID;
+        public string groupName;
         public AudioClip[] group;
     }
 }

@@ -136,6 +136,10 @@ public class AudioManager : MonoBehaviour {
     #region Play 2D Sounds
 
     //Não precisa determinar uma posição
+    public void PlaySound2D(AudioClip clip)
+    {
+        sfx2DSource.PlayOneShot(clip, sfxVolumePercent * masterVolumePercent);    
+    }
 
     public void PlaySound2D(string soundGroup)  //Escolhe o som de um grupo de forma aleatória
     {
