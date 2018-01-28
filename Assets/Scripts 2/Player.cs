@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
     float accelerationTimeAirborne = .2f; //Aceleração no Ar
     float accelerationTimeGrounded = .1f; //Aceleração no chão
     float gravity;
+	SpriteRenderer rend;
     float jumpVelocity;
 
     float moveSpeed = 6;
@@ -18,9 +19,9 @@ public class Player : MonoBehaviour {
 
 	void Start () {
         controller = GetComponent<Controller2D>();
+		rend = GetComponent<SpriteRenderer>();
         gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2); //S = S0 + V0*t + (a * t^2)/2
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex; // V = Vo + a*t;
-        print("Gravit: " + gravity + " Jump Velocity " + jumpVelocity);
     }
 
     void Update () {
@@ -36,6 +37,8 @@ public class Player : MonoBehaviour {
         {
             velocity.y = jumpVelocity;
         }
+		
+		rend.flipX = input.x > 0;
 
         float targetVelocityX = input.x * moveSpeed;
         /* Suaviza o movimento na direção X

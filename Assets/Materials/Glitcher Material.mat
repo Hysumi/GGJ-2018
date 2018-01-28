@@ -62,6 +62,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _GlitchSpeed: 2
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -72,7 +73,7 @@ Material:
     - _OffsetX: 1
     - _OffsetY: 0
     - _Parallax: 0.02
-    - _Radius: 0.59
+    - _Radius: 0.56
     - _RaiseSpeed: 20
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -80,7 +81,7 @@ Material:
     - _SpeedX: 2
     - _SpeedY: 0
     - _SrcBlend: 1
-    - _Steps: 5
+    - _Steps: 3
     - _Transparency: 0.636
     - _UVSec: 0
     - _Wavy: 1

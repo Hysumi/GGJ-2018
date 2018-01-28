@@ -15,6 +15,7 @@ Shader "Glitch/Glitcher Look Through"
 		_Speed("Speed", Float) = 0
 		_Transparency("Transparency", Range(0,1)) = 1.0
 		_Radius("UV Radius", Range(0,0.8)) = 0.8
+		_GlitchSpeed("Glitch Speed", Float) = 1.0
 		
 	}
 	SubShader
@@ -57,6 +58,7 @@ Shader "Glitch/Glitcher Look Through"
 			float _Speed;
 			float _Transparency;
 			float _Radius;
+			float _GlitchSpeed;
 			
 			v2f vert (appdata v)
 			{
@@ -77,7 +79,7 @@ Shader "Glitch/Glitcher Look Through"
 				fixed4 col = tex2D(_MainTex, i.uv);
 				
 				
-				col.rgb = fixed3( frac(i.uv.y * steps + _Time.y), frac(steps * i.uv.x + _SinTime.w * i.uv.y), frac(sin(i.uv.x * steps)));
+				col.rgb = fixed3( frac(i.uv.y * steps + (_GlitchSpeed * _Time.y)), frac(steps * i.uv.x + (_GlitchSpeed * _SinTime.w) * i.uv.y), frac(sin(i.uv.x * steps)));
 				col.a = _Transparency;
 				clip((sqrt(pow(i.uv.x-0.5, 2) + pow(i.uv.y-0.5, 2))-_Radius)*-1);
 				return col;
