@@ -6,9 +6,12 @@ public class AudioManager : MonoBehaviour {
     public enum AudioChannel {Master, Sfx, Music};
     public int musicQtd = 3;
 
-    float masterVolumePercent = .2f;
-    float sfxVolumePercent = 1;
-    float musicVolumePercent = 1;
+    [Range(0,1)]
+    public float masterVolumePercent = .2f;
+    [Range(0, 1)]
+    public float sfxVolumePercent = 1;
+    [Range(0, 1)]
+    public float musicVolumePercent = 1;
 
     AudioSource sfx2DSource;
     AudioSource[] musicSources;
